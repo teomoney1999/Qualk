@@ -236,10 +236,10 @@ public class DBUtils {
 		ps.executeUpdate();
 	}
 	
-	public static List<Form> UC_TimKiemBTD(Connection conn, String id) throws SQLException{
-		String query = "Select * from Form where id = ?";
+	public static List<Form> UC_TimKiemBTD(Connection conn, String title) throws SQLException{
+		String query = "Select * from rescruiment_Form where title = ?";
 		PreparedStatement ps = conn.prepareStatement(query);
-		ps.setString(1, id);
+		ps.setString(1, title);
 		ResultSet rs = ps.executeQuery();
 		List<Form> formData = new ArrayList<>();
 		while (rs.next()) {
@@ -328,5 +328,17 @@ public class DBUtils {
 			inviteData.add(a);
 		}
 		return inviteData;
+	}
+	
+	public static List<Location> UC_Location(Connection conn) throws SQLException {
+		String query = "Select * from location";
+		PreparedStatement ps = conn.prepareStatement(query);
+		ResultSet rs = ps.executeQuery();
+		List<Location> locationList = new ArrayList<>();
+		while (rs.next()) {
+			Location location = new Location(rs.getString(1), rs.getString(2), rs.getString(3));
+			locationList.add(location);
+		}
+		return locationList;
 	}
 }
